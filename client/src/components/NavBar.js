@@ -5,7 +5,7 @@ const NavBar = (props) => {
     <div className='nav-bar'>
       <a href='/login'>Login</a>
       <br></br>
-      <a href='/bubble-page'>Friends</a>
+      <a href='/bubble-page'>Bubbles!</a>
     </div>
   );
 };

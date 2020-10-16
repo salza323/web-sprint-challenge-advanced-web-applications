@@ -14,7 +14,7 @@ function App() {
       <NavBar />
       <Router>
         <Switch>
-          <Route exact path='/login' component={Login} />
+          <Route path='/login' component={Login} />
           {/* 
           Build a PrivateRoute component that will 
           display BubblePage when you're authenticated 
