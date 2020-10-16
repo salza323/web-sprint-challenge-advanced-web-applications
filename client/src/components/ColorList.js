@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { axiosWithAuth } from '../utils/AxiosWithAuth';
@@ -27,9 +27,18 @@ const ColorList = ({ colors, updateColors }) => {
     // think about where will you get the id from...
     // where is is saved right now?
     axiosWithAuth()
-      .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
+      .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then((res) => {
-        updateColors(res.data);
+        // console.log(res.data);
+        updateColors(
+          colors.map((color) => {
+            if (res.data.id === color.id) {
+              return res.data;
+            } else {
+              return color;
+            }
+          })
+        );
         push('/bubble-page');
       })
       .catch((err) => {
@@ -40,9 +49,17 @@ const ColorList = ({ colors, updateColors }) => {
   const deleteColor = (color) => {
     // make a delete request to delete this color
     axiosWithAuth()
-      .delete(`http://localhost:5000/api/colors/${color.id}`)
+      .delete(`/colors/${color.id}`)
       .then(() => {
-        updateColors();
+        updateColors(
+          colors.filter((c) => {
+            if (color.id === c.id) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        );
         push('/bubble-page');
       })
       .catch((err) => {
